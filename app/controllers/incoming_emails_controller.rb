@@ -13,7 +13,10 @@ class IncomingEmailsController < ActionController::Base
     cantidad = regex_match[1] if regex_match != nil
     cantidad = cantidad.gsub(/\$/, '')
 	logger.info "Monto: " + cantidad
-	cantidad_ynab = cantidad.to_i * 100
+	
+	# Multiplicamos la cantidad por 1000 ya que es el formato que YNAB acepta, negativo
+	# para que sea un outflow
+	cantidad_ynab = cantidad.to_i * -1000 
 
 	tarjeta_match = body.match(/color:#666666;" width="301"><b>(.*)<\/b>/)
 	cuenta = ""
