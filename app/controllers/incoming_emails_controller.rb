@@ -3,9 +3,8 @@ require 'mail'
 class IncomingEmailsController < ActionController::Base
 
   def create
-    mail = Mail.new(params[:message])
-   
-    body = mail.body
+    Rails.logger.info params
+    body =  params[:html]
 
     # Procesamos el body
     regex_match = body.match(/color:#666666;" width="298"><b>(.*)<\/b>/)
