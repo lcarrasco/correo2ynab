@@ -1,4 +1,5 @@
 require 'mail'
+require 'chronic'
 
 class IncomingEmailsController < ActionController::Base
 
@@ -54,7 +55,7 @@ class IncomingEmailsController < ActionController::Base
 		    ynab_api.transactions.create_transaction(ENV['YNAB_BUDGET_ID'], {
 		      transaction: {
 		        account_id: account_id,	        
-		        date: Date.today, #ToDO: Sacar fecha/hora del correo
+		        date: Chronic.parse(fecha)
 		        payee_name: comercio,
 		        memo: '',
 		        cleared: 'Cleared',
