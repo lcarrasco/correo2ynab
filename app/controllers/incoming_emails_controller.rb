@@ -31,17 +31,28 @@ class IncomingEmailsController < ActionController::Base
 	logger.info "Fecha: " + fecha 
 
 	account_id = ""
-	# ToDO: Asociar account_id
+	
+	ynab_api = YNAB::API.new(ENV['YNAB_ACCESS_TOKEN'])
+
+	# Procesamos todas las cuentas del presupuesto buscando la cuenta cuyas
+	# notas sean igual que el nombre de la tarjeta que reporta el banco
+	account_response = ynab_api.accounts.get_accounts(ENV['YNAB_BUDGET_ID'])
+	accounts = account_response.data.accounts
+
+	accounts.each do |account|
+	  if account.note == cuenta
+	  	account_id = account.id 
+	  	break
+	  end
+	end
 
 	if account_id != ""
 		# Insertamos el registro en YNAB
-		begin
-			budget_id = ENV['YNAB_BUDGET_ID']
-			ynab_api = YNAB::API.new(ENV['YNAB_ACCESS_TOKEN'])
-		    ynab_api.transactions.create_transaction(budget_id, {
+		begin		
+		    ynab_api.transactions.create_transaction(ENV['YNAB_BUDGET_ID'], {
 		      transaction: {
 		        account_id: account_id,	        
-		        date: Date.today,
+		        date: Date.today, #ToDO: Sacar fecha/hora del correo
 		        payee_name: comercio,
 		        memo: '',
 		        cleared: 'Cleared',
