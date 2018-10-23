@@ -55,7 +55,7 @@ class IncomingEmailsController < ActionController::Base
 		    ynab_api.transactions.create_transaction(ENV['YNAB_BUDGET_ID'], {
 		      transaction: {
 		        account_id: account_id,	        
-		        date: Chronic.parse(fecha)
+		        date: Chronic.parse(fecha),
 		        payee_name: comercio,
 		        memo: '',
 		        cleared: 'Cleared',
