@@ -7,7 +7,7 @@ class IncomingEmailsController < ActionController::Base
     body =  params[:html]
 
     # Procesamos el body
-    regex_match = body.match(/color:#666666;" width="298"><b>(.*)<\/b>/)
+    regex_match = body.match(/width="298"><b>(.*)<\/b>/)
     cantidad = ""
     cantidad = regex_match[1] if regex_match != nil
     cantidad = cantidad.gsub(/\$/, '')
@@ -17,17 +17,17 @@ class IncomingEmailsController < ActionController::Base
 	# para que sea un outflow
 	cantidad_ynab = cantidad.to_i * -1000 
 
-	tarjeta_match = body.match(/color:#666666;" width="301"><b>(.*)<\/b>/)
+	tarjeta_match = body.match(/width="301"><b>(.*)<\/b>/)
 	cuenta = ""
 	cuenta = tarjeta_match[1] if tarjeta_match != nil
 	logger.info "Tarjeta: " + cuenta 
 
-	negocio_match = body.match(/align="left" width="215"><b>(.*)<\/b><\/td>/)
+	negocio_match = body.match(/width="215"><b>(.*)<\/b><\/td>/)
 	comercio = "Comercio"
 	comercio = negocio_match[1] if negocio_match != nil
 	logger.info "Negocio: " +  comercio
 
-	fecha_match = body.match(/height="20" width="210">(.*)<\/td><td width="20">/)
+	fecha_match = body.match(/width="210">(.*)<\/td><td width="20">/)
 	fecha = ""
 	fecha = fecha_match[1] if fecha_match != nil 
 	logger.info "Fecha: " + fecha 
