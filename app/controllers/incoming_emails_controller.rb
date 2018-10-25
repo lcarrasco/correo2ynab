@@ -43,7 +43,7 @@ class IncomingEmailsController < ActionController::Base
 	accounts = account_response.data.accounts
 
 	accounts.each do |account|
-	  if account.note == cuenta
+	  if account.note.index(cuenta) != nil
 	  	account_id = account.id 
 	  	break
 	  end
