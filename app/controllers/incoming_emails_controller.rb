@@ -44,7 +44,7 @@ class IncomingEmailsController < ActionController::Base
 
 	accounts.each do |account|
 	  logger.info "Account Note: '" + account.note.to_s + "' - '#{cuenta}', " + account.note.to_s.index(cuenta).to_s
-	  if account.note.to_s.index(cuenta) != nil
+	  if cuenta.index(account.note.to_s) != nil
 	  	account_id = account.id 
 	  	puts "*** ACCOUNT DETECTED ***"
 	  	break
