@@ -43,7 +43,7 @@ class IncomingEmailsController < ActionController::Base
 	accounts = account_response.data.accounts
 
 	accounts.each do |account|
-	  logger.info "Account Note: " + account.note.to_s   
+	  logger.info "Account Note: '" + account.note.to_s + "' - '#{cuenta}', " + account.note.to_s.index(cuenta).to_s
 	  if account.note.to_s.index(cuenta) != nil
 	  	account_id = account.id 
 	  	puts "*** ACCOUNT DETECTED ***"
