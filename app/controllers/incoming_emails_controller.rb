@@ -20,7 +20,7 @@ class IncomingEmailsController < ActionController::Base
 
 	tarjeta_match = body.match(/width="301"><b>(.*)<\/b>/)
 	cuenta = ""
-	cuenta = tarjeta_match[1] if tarjeta_match != nil
+	cuenta = tarjeta_match[1].strip if tarjeta_match != nil
 	logger.info "Tarjeta: " + cuenta 
 
 	negocio_match = body.match(/width="215"><b>(.*)<\/b><\/td>/)
@@ -43,8 +43,10 @@ class IncomingEmailsController < ActionController::Base
 	accounts = account_response.data.accounts
 
 	accounts.each do |account|
+	  logger.info "Account Note: " + account.note.to_s   
 	  if account.note.to_s.index(cuenta) != nil
 	  	account_id = account.id 
+	  	puts "*** ACCOUNT DETECTED ***"
 	  	break
 	  end
 	end
