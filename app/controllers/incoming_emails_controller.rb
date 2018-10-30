@@ -12,6 +12,7 @@ class IncomingEmailsController < ActionController::Base
     cantidad = ""
     cantidad = regex_match[1] if regex_match != nil
     cantidad = cantidad.gsub(/\$/, '')
+    cantidad = cantidad.gsub(/,/, '')
 	logger.info "Monto: " + cantidad
 	
 	# Multiplicamos la cantidad por 1000 ya que es el formato que YNAB acepta, negativo
