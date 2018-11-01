@@ -17,7 +17,7 @@ class IncomingEmailsController < ActionController::Base
 	
 	# Multiplicamos la cantidad por 1000 ya que es el formato que YNAB acepta, negativo
 	# para que sea un outflow
-	cantidad_ynab = cantidad.to_i * -1000 
+	cantidad_ynab = (cantidad.to_f * -1000).to_i 
 
 	tarjeta_match = body.match(/width="301"><b>(.*)<\/b>/)
 	cuenta = ""
