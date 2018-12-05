@@ -54,6 +54,14 @@ class IncomingEmailsController < ActionController::Base
 	   end
 	end
 
+	# Reemplazamos los nombres de los meses que en español difieren
+	# de los nombres en ingles ya que el Chronic gem no funciona
+	# con nombres en español
+	fecha = fecha.gsub(/Ene/, 'Jan')
+	fecha = fecha.gsub(/Abr/, 'Apr')
+	fecha = fecha.gsub(/Ago/, 'Aug')
+	fecha = fecha.gsub(/Dic/, 'Dec')
+
 	if account_id != ""
 		# Insertamos el registro en YNAB
 		begin		
